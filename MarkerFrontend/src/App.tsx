@@ -7,39 +7,39 @@ import {
 } from "react";
 import axios from "axios";
 
-import AddNote from "./components/AddNote";
-import NotesList from "./components/NotesList";
+import AddMarkobj from "./components/AddMarkobj";
+import MarkobjsList from "./components/MarkobjsList";
 
 import "./App.css";
 import "./utility.styles.css";
 
-export interface NoteObject {
+export interface MarkobjObject {
   id: number;
   title: string;
-  note_body: string;
+  markobj_body: string;
 }
 
-export const NotesListUpdateFunctionContext = createContext(
-  {} as Dispatch<SetStateAction<NoteObject[]>>
+export const MarkobjsListUpdateFunctionContext = createContext(
+  {} as Dispatch<SetStateAction<MarkobjObject[]>>
 );
 
 export default function App() {
-  const [notes, setNotes] = useState<NoteObject[]>([]);
+  const [markobjs, setMarkobjs] = useState<MarkobjObject[]>([]);
 
   useEffect(() => {
-    const getNotes = async () => {
-      const API_URL = import.meta.env.VITE_NOTES_API_URL;
-      const { data } = await axios.get<NoteObject[]>(`${API_URL}/notes`);
-      setNotes(data);
+    const getMarkobjs = async () => {
+      const API_URL = import.meta.env.VITE_MARK_API_URL;
+      const { data } = await axios.get<MarkobjObject[]>(`${API_URL}/markobjs`);
+      setMarkobjs(data);
     };
 
-    void getNotes();
+    void getMarkobjs();
   }, []);
 
   return (
-    <NotesListUpdateFunctionContext.Provider value={setNotes}>
+    <MarkobjsListUpdateFunctionContext.Provider value={setMarkobjs}>
       <div>
-        <h1 id="app-title">Notes App</h1>
+        <h1 id="app-title">Markobjs App</h1>
         <small id="made-with-txt">
           Made with{" "}
           <a target="_blank" href="https://fastapi.tiangolo.com/">
@@ -51,10 +51,10 @@ export default function App() {
             React.js
           </a>
         </small>
-        <AddNote />
+        <AddMarkobj />
         <hr />
-        <NotesList notes={notes} />
+        <MarkobjsList markobjs={markobjs} />
       </div>
-    </NotesListUpdateFunctionContext.Provider>
+    </MarkobjsListUpdateFunctionContext.Provider>
   );
 }

@@ -1,27 +1,27 @@
 import { useContext, Dispatch, SetStateAction } from "react";
 import axios from "axios";
 
-import { NoteObject, NotesListUpdateFunctionContext } from "../../../App";
+import { MarkobjObject, MarkobjsListUpdateFunctionContext } from "../../../App";
 
 import "./DeleteModal.styles.css";
 
 interface DeleteModalProps {
-  noteId: number;
+  markobjId: number;
   showDeleteModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function DeleteModal({
-  noteId,
+  markobjId,
   showDeleteModal,
 }: DeleteModalProps) {
-  const setNotes = useContext(NotesListUpdateFunctionContext);
+  const setMarkobjs = useContext(MarkobjsListUpdateFunctionContext);
 
   const handleYesClick = async () => {
-    const API_URL = import.meta.env.VITE_NOTES_API_URL;
-    await axios.delete(`${API_URL}/note/${noteId}`);
+    const API_URL = import.meta.env.VITE_MARK_API_URL;
+    await axios.delete(`${API_URL}/markobj/${markobjId}`);
 
-    const { data } = await axios.get<NoteObject[]>(`${API_URL}/notes`);
-    setNotes(data);
+    const { data } = await axios.get<MarkobjObject[]>(`${API_URL}/markobjs`);
+    setMarkobjs(data);
     showDeleteModal(false);
   };
 
@@ -32,7 +32,7 @@ export default function DeleteModal({
   return (
     <div id="delete-modal-container">
       <div id="delete-modal">
-        <p id="prompt-msg">Delete this Note?</p>
+        <p id="prompt-msg">Delete this Markobj?</p>
         <div id="btn-container">
           <button id="yes-btn" onClick={() => void handleYesClick()}>
             Yes

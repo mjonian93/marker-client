@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import axios from "axios";
 
-import { NotesListUpdateFunctionContext } from "../../../App";
+import { MarkobjsListUpdateFunctionContext } from "../../../App";
 import "./DeleteModal.styles.css";
 
-export default function DeleteModal({ noteId, showDeleteModal }) {
-  const setNotes = useContext(NotesListUpdateFunctionContext);
+export default function DeleteModal({ markobjId, showDeleteModal }) {
+  const setMarkobjs = useContext(MarkobjsListUpdateFunctionContext);
   const handleYesClick = async () => {
     const API_URL = "http://localhost:8000";
-    await axios.delete(`${API_URL}/note/${noteId}`);
-    const { data } = await axios.get(`${API_URL}/notes`);
-    setNotes(data);
+    await axios.delete(`${API_URL}/markobj/${markobjId}`);
+    const { data } = await axios.get(`${API_URL}/markobjs`);
+    setMarkobjs(data);
     showDeleteModal(false);
   };
   const handleNoClick = () => {
@@ -19,7 +19,7 @@ export default function DeleteModal({ noteId, showDeleteModal }) {
   return (
     <div id="delete-modal-container">
       <div id="delete-modal">
-        <p id="prompt-msg">Delete this Note?</p>
+        <p id="prompt-msg">Delete this Markobj?</p>
         <div id="btn-container">
           <button id="yes-btn" onClick={() => handleYesClick()}>
             Yes

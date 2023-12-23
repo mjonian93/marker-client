@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef, useContext, FormEvent } from "react";
 import axios from "axios";
 
-import "./AddNote.styles.css";
-import { NoteObject, NotesListUpdateFunctionContext } from "../../App";
+import "./AddMarkobj.styles.css";
+import { MarkobjObject, MarkobjsListUpdateFunctionContext } from "../../App";
 
-export default function AddNote() {
+export default function AddMarkobj() {
   const [title, setTitle] = useState("");
-  const [noteBody, setNoteBody] = useState("");
+  const [markobjBody, setMarkobjBody] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [hasInputError, setHasInputError] = useState(false);
 
-  const setNotes = useContext(NotesListUpdateFunctionContext);
+  const setMarkobjs = useContext(MarkobjsListUpdateFunctionContext);
 
   const titleInputRef = useRef<HTMLInputElement>({} as HTMLInputElement);
 
@@ -21,26 +21,26 @@ export default function AddNote() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (title.length > 0 || noteBody.length > 0) {
+    if (title.length > 0 || markobjBody.length > 0) {
       setIsFormSubmitting(true);
-      const API_URL = import.meta.env.VITE_NOTES_API_URL;
-      const { data } = await axios.post<NoteObject>(`${API_URL}/note`, {
+      const API_URL = import.meta.env.VITE_MARK_API_URL;
+      const { data } = await axios.post<MarkobjObject>(`${API_URL}/markobj`, {
         title,
-        note_body: noteBody,
+        note_body: markobjBody,
       });
-      setNotes((prev) => [...prev, data]);
+      setMarkobjs((prev) => [...prev, data]);
     } else {
       setHasInputError(true);
     }
 
     setTitle("");
-    setNoteBody("");
+    setMarkobjBody("");
     setIsFormSubmitting(false);
     titleInputRef.current.focus();
   };
 
   return (
-    <form onSubmit={(event) => void handleSubmit(event)} id="add-note-form">
+    <form onSubmit={(event) => void handleSubmit(event)} id="add-markobj-form">
       <input
         type="text"
         placeholder="Enter Title"
@@ -54,19 +54,19 @@ export default function AddNote() {
         }}
       />
       <textarea
-        placeholder="Enter Note"
-        id="note-body-textarea"
+        placeholder="Enter Markobj"
+        id="markobj-body-textarea"
         className={hasInputError ? "input-error" : ""}
         cols={30}
         rows={10}
-        value={noteBody}
+        value={markobjBody}
         onChange={(event) => {
           setHasInputError(false);
-          setNoteBody(event.target.value);
+          setMarkobjBody(event.target.value);
         }}
       />
-      <button id="add-note-btn" type="submit" disabled={isFormSubmitting}>
-        {isFormSubmitting ? "..." : "Add Note"}
+      <button id="add-markobj-btn" type="submit" disabled={isFormSubmitting}>
+        {isFormSubmitting ? "..." : "Add Markobj"}
       </button>
     </form>
   );
