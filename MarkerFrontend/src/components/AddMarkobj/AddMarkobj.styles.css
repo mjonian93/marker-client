@@ -1,4 +1,4 @@
-#add-note-form {
+#add-markobj-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -8,8 +8,8 @@
   padding: 0 24px;
 }
 
-#add-note-form > input,
-#add-note-form > textarea {
+#add-markobj-form > input,
+#add-markobj-form > textarea {
   padding: 10px;
   background-color: rgb(223, 223, 223);
   border: none;
@@ -22,12 +22,12 @@
   font-weight: 900;
 }
 
-#note-body-textarea {
+#markobj-body-textarea {
   resize: none;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#add-note-btn {
+#add-markobj-btn {
   padding: 10px;
   width: fit-content;
   min-width: 80px;
@@ -41,15 +41,15 @@
   transition: all 0.1s ease-in;
 }
 
-#add-note-btn:hover {
+#add-markobj-btn:hover {
   background-color: rgb(33, 162, 213);
 }
 
-#add-note-btn:active {
+#add-markobj-btn:active {
   background-color: rgb(24, 103, 135);
 }
 
-#add-note-btn:disabled {
+#add-markobj-btn:disabled {
   background-color: rgb(24, 103, 135);
   color: rgb(195, 195, 195);
 }

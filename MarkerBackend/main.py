@@ -15,10 +15,11 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 sio = socketio.SimpleClient()
 sio.connect('http://localhost:5000')
+# app = FastAPI()
 
 
 origins = [
-    "http://localhost:5173" # or add your own front-end's domain name
+    "http://127.0.0.1:5173", # or add your own front-end's domain name
 ]
 
 app.add_middleware(
@@ -33,7 +34,7 @@ app.add_middleware(
 def read_markobjs():
     db = DBSession()
     try:
-        markobjs = db.query(models.Note).all()
+        markobjs = db.query(models.Markobj).all()
     finally:
         db.close()
     return markobjs
@@ -60,6 +61,7 @@ def add_markobj(markobj: MarkInput):
 
 @app.post("/mark/{markobj_id}")
 def mark_markobj(markobj_id: int):
+    print("Hey " + str(markobj_id))
     db = DBSession()
     try:
         markobj = db.query(models.MarkObj).filter(models.MarkObj.id == markobj_id).first()
@@ -90,7 +92,7 @@ def update_markobj(markobj_id: int, updated_markobj: MarkInput):
 def delete_markobj(markobj_id: int):
     db = DBSession()
     try:
-        markobj = db.query(models.MarkObj).filter(models.MarkObj.id == markobj_id).first()
+        markobj = db.query(models.Markobj).filter(models.Markobj.id == markobj_id).first()
         db.delete(markobj)
         db.commit()
     except UnmappedInstanceError:

@@ -26,7 +26,7 @@ export default function AddMarkobj() {
       const API_URL = import.meta.env.VITE_MARK_API_URL;
       const { data } = await axios.post<MarkobjObject>(`${API_URL}/markobj`, {
         title,
-        note_body: markobjBody,
+        markobj_body: markobjBody,
       });
       setMarkobjs((prev) => [...prev, data]);
     } else {

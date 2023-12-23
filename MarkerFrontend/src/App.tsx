@@ -39,7 +39,7 @@ export default function App() {
   return (
     <MarkobjsListUpdateFunctionContext.Provider value={setMarkobjs}>
       <div>
-        <h1 id="app-title">Markobjs App</h1>
+        <h1 id="app-title">Mark App</h1>
         <small id="made-with-txt">
           Made with{" "}
           <a target="_blank" href="https://fastapi.tiangolo.com/">

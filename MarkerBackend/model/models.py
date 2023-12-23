@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class MarkObj(Base):
+class Markobj(Base):
 
     __tablename__ = "markobjs"
 
