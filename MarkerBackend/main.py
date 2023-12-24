@@ -5,17 +5,20 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from model.database import DBSession
 from model import models
 from schemas import MarkInput
-import socketio
+import socket
+import sys
 
+HOST, PORT = "localhost", 5000
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    sio.disconnect()
+    yield
+    s.close()
 
 app = FastAPI(lifespan=lifespan)
-sio = socketio.SimpleClient()
-sio.connect('http://localhost:5000')
 # app = FastAPI()
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
 
 
 origins = [
@@ -64,10 +67,10 @@ def mark_markobj(markobj_id: int):
     print("Hey " + str(markobj_id))
     db = DBSession()
     try:
-        markobj = db.query(models.MarkObj).filter(models.MarkObj.id == markobj_id).first()
+        markobj = db.query(models.Markobj).filter(models.Markobj.id == markobj_id).first()
     finally:
         db.close()
-    sio.emit('mark message', {'msg' : markobj.markobj_body})
+    s.send(markobj.markobj_body.encode('utf-8'))
 
 
 @app.put("/markobj/{markobj_id}")
